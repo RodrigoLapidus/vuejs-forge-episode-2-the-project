@@ -1,4 +1,4 @@
-POST https://api.stripe.com/v1/products HTTP/1.1
+  POST https://api.stripe.com/v1/products HTTP/1.1
 Authorization: Bearer {{$dotenv STRIPE_SECRET_KEY}}
 content-type: application/json
 
