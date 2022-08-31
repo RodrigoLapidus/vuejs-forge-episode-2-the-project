@@ -8,6 +8,7 @@ const unwatch = watch(
   () => cartStore.isFirstLoad,
   (b) => {
     if (!b) {
+      // this will give a description of the products purhcased and the total price paid
       orderedProducts.value = JSON.parse(JSON.stringify(cartStore.products));
       orderedTotal.value = cartStore.subtotal;
       // reset the cart
