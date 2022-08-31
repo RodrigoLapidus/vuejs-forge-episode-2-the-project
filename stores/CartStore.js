@@ -7,7 +7,7 @@ export const useCartStore = defineStore("CartStore", () => {
   // state
   const products = ref([]);
   const taxRate = 0.1;
-  const isFirstLoading = ref(false);
+  const isFirstLoad = ref(false);
   const loading = ref(false);
 
   // getters
@@ -43,7 +43,11 @@ export const useCartStore = defineStore("CartStore", () => {
     return count;
   }
 
-    // triggers
+  function reset() {
+    products.value = [];
+  }
+
+  // triggers
   // init data
   deskree.auth.onAuthStateChange(async (user) => {
     isFirstLoad.value = true;
@@ -79,6 +83,8 @@ export const useCartStore = defineStore("CartStore", () => {
     loading,
     removeProducts,
     addProduct,
+    isFirstLoad,
+    reset,
   };
 });
 

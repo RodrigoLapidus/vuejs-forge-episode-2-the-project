@@ -1,8 +1,6 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { stringify } from "postcss";
 export const useProductStore = defineStore("ProductStore", {
   state: () => {
-    const route = useRoute();
     return {
       /**
        * The listing of all the products
@@ -13,9 +11,9 @@ export const useProductStore = defineStore("ProductStore", {
        * Different ways of fetching the listing of products (filters, order, search)
        */
       filters: {
-        "fields.heatLevel": route.query['fields.heatLevel'] || "",
-        order: route.query.order || "",
-        query: route.query.query || "",
+        "fields.heatLevel": useRoute().query["fields.heatLevel"] || "",
+        order: useRoute().query.order || "",
+        query: useRoute().query.query || "",
       },
 
       /**
@@ -38,19 +36,17 @@ export const useProductStore = defineStore("ProductStore", {
       const { $contentful } = useNuxtApp();
       const entries = await $contentful.getEntries({
         content_type: "product",
-        ...this.filters,
+        ...this.activeFilters,
       });
       this.products = entries.items;
       return this.products;
     },
-
     async fetchProduct(id) {
       const { $contentful } = useNuxtApp();
       this.singleProduct = await $contentful.getEntry(id);
       return this.singleProduct;
     },
-
-  }, 
+  },
 });
 
 if (import.meta.hot) {
